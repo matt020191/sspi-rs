@@ -114,17 +114,17 @@ impl Username {
     }
 
     /// Returns the internal representation, as-is
-    pub(crate) fn inner(&self) -> &str {
+    pub fn inner(&self) -> &str {
         &self.value
     }
 
     /// Returns the [`UserNameFormat`] for this username
-    pub(crate) fn format(&self) -> UserNameFormat {
+    pub fn format(&self) -> UserNameFormat {
         self.format
     }
 
     /// May return None or NetBIOS domain name depending on the internal format
-    pub(crate) fn domain_name(&self) -> Option<&str> {
+    pub fn domain_name(&self) -> Option<&str> {
         match self.format() {
             UserNameFormat::DownLevelLogonName => self.sep_idx.map(|idx| &self.value[..idx]),
             UserNameFormat::UserPrincipalName => None,
@@ -132,7 +132,7 @@ impl Username {
     }
 
     /// Returns the account name
-    pub(crate) fn account_name(&self) -> &str {
+    pub fn account_name(&self) -> &str {
         match self.format() {
             UserNameFormat::DownLevelLogonName => {
                 self.sep_idx.map(|idx| &self.value[idx + 1..]).unwrap_or(self.inner())
